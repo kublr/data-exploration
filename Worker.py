@@ -1,8 +1,6 @@
 # To run
 # celery -A Worker worker --loglevel=info
-# "Worker" has to be the name of the file and the name passed to
-
-
+# "Worker" has to be the name of the file and the name passed
 from celery import Celery
 import sklearn
 import sklearn.ensemble
@@ -11,14 +9,19 @@ import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
-app = Celery('Worker', backend='rpc://')
+app = Celery('Worker', broker='pyamqp://guest@localhost/')
 
 # File path
 FILE_SYSTEM = ""
-TRAIN_DATASET_NAME = "volume/ToTrainDataset.csv"
+TRAIN_DATASET_NAME = "/home/dennisfedorchuk/Desktop/Tables/ToTrainDataset.csv"
 
 # Create the df containing data and edit it
 df = pd.read_csv(FILE_SYSTEM + TRAIN_DATASET_NAME)
+
+
+@app.task
+def result_handler(result):
+    return 1
 
 @app.task
 def predict(n_estimators, min_samples_leaf):
@@ -49,5 +52,12 @@ def predict(n_estimators, min_samples_leaf):
 
     pred = rf.predict_proba(X_test)
 
+    # Put result in handler_queue
+    result_handler.apply_async(args=[sklearn.metrics.accuracy_score(Y_test, rf.predict(X_test))], queue = 'handler_queue') 
+
     return sklearn.metrics.accuracy_score(Y_test, rf.predict(X_test))
 
+
+# this is a needed setup step in order to make sure 
+# that handler_queue can be created at runtime
+CELERY_CREATE_MISSING_QUEUES = True

@@ -27,4 +27,4 @@ COPY Worker.py /opt
 RUN chmod +x ./opt/run.sh
 
 #Set script as entry point 
-ENTRYPOINT ["/opt/run.sh"]
+ENTRYPOINT ["./opt/run.sh"]
