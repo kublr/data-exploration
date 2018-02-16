@@ -13,14 +13,14 @@ app = Celery('Worker', broker='pyamqp://guest@localhost/')
 
 # File path
 FILE_SYSTEM = ""
-TRAIN_DATASET_NAME = "/home/dennisfedorchuk/Desktop/Tables/ToTrainDataset.csv"
+TRAIN_DATASET_NAME = "/opt/volume/ToTrainDataset.csv"
 
 # Create the df containing data and edit it
 df = pd.read_csv(FILE_SYSTEM + TRAIN_DATASET_NAME)
 
 
 @app.task
-def result_handler(result):
+def result_handler(n_estimators, min_samples_leaf, result):
     return 1
 
 @app.task
@@ -53,7 +53,7 @@ def predict(n_estimators, min_samples_leaf):
     pred = rf.predict_proba(X_test)
 
     # Put result in handler_queue
-    result_handler.apply_async(args=[sklearn.metrics.accuracy_score(Y_test, rf.predict(X_test))], queue = 'handler_queue') 
+    result_handler.apply_async(args=[n_estimators, min_samples_leaf, sklearn.metrics.accuracy_score(Y_test, rf.predict(X_test))], queue = 'handler_queue') 
 
     return sklearn.metrics.accuracy_score(Y_test, rf.predict(X_test))
 

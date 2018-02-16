@@ -18,11 +18,8 @@ RUN pip3 install celery
 VOLUME "/opt/volume"
 
 #Copy script into docker
-COPY run.sh /opt
-COPY Worker.py /opt
- 
-# To run a worker use this line
-# RUN celery -A Worker worker --loglevel=info
+COPY PredictWorker/run.sh /opt
+COPY PredictWorker/Worker.py /opt
 
 RUN chmod +x ./opt/run.sh
 

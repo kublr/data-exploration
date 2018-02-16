@@ -9,15 +9,15 @@ from celery.signals import worker_init
 
 app = Celery('Worker', broker='pyamqp://guest@localhost/')
 
-l = [[1]]
+l = [[1,2,3]]
 
 
 
 
 
 @app.task()
-def result_handler(result):
-	new_row = [result]
+def result_handler(n_estimators, min_samples_leaf, result):
+	new_row = [n_estimators, min_samples_leaf, result]
 	l = np.load("save.npy")
 	l = np.vstack([l, new_row])
 	np.save("save.npy", l)

@@ -15,16 +15,8 @@ def predict(n_estimators, min_samples_leaf):
 
 listOfResponces = []
 for i in range(10):
-	res = predict.delay(343, 50)
+	n_estimators = 100 + i*20
+	min_samples_leaf = 20 + i*10
+	res = predict.delay(n_estimators, min_samples_leaf)
 	listOfResponces.append(res)
 	#print(res.get())
-
-# while(True):
-# 	if len(listOfResponces) > 0:
-# 		for i in listOfResponces:
-# 			if i.ready():
-# 				print(i.get())
-# 				listOfResponces.remove(i)
-# 	else:
-# 		break;
-# 	time.sleep(1)
