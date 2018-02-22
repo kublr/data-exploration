@@ -1,6 +1,7 @@
 # To run
 # celery -A Worker worker --loglevel=info
 # "Worker" has to be the name of the file and the name passed
+import os
 from celery import Celery
 import sklearn
 import sklearn.ensemble
@@ -9,11 +10,17 @@ import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
-app = Celery('Worker', broker='pyamqp://guest@localhost/')
+user = os.environ['REBBIT_USERNAME_SET']
+userpass = os.environ['REBBIT_USERPASS_SET']
+ip = os.environ['REBBIT_IP_SET']
+
+
+app = Celery('Worker', broker=('amqp://' + user + ':' + userpass + '@' + ip + '/'))
 
 # File path
 FILE_SYSTEM = ""
 TRAIN_DATASET_NAME = "/opt/volume/ToTrainDataset.csv"
+
 
 # Create the df containing data and edit it
 df = pd.read_csv(FILE_SYSTEM + TRAIN_DATASET_NAME)

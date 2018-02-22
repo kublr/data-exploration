@@ -1,10 +1,15 @@
+import os
 from celery import Celery
 from celery.signals import task_success
 import time
 
 
-app = Celery('Worker', broker='pyamqp://guest@localhost//', backend='rpc://')
+user = os.environ['REBBIT_USERNAME_SET']
+userpass = os.environ['REBBIT_USERPASS_SET']
+ip = os.environ['REBBIT_IP_SET']
 
+
+app = Celery('Worker', broker=('amqp://' + user + ':' + userpass + '@' + ip + '/'))
 @app.task
 def predict(n_estimators, min_samples_leaf):
     return 1

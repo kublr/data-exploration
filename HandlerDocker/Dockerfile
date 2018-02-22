@@ -11,17 +11,22 @@ RUN apt-get update && apt-get install -y make ant
 RUN apt-get -y install python3-pip
 RUN pip3 install numpy
 RUN pip3 install pandas
-RUN pip3 install sklearn
-RUN pip3 install scipy
 RUN pip3 install celery
 
 VOLUME "/opt/volume"
 
 #Copy script into docker
-COPY PredictWorker/run.sh /opt
-COPY PredictWorker/Worker.py /opt
+COPY HandlerWorker/run.sh /opt
+COPY HandlerWorker/Worker.py /opt
+COPY Scheduler.py /opt
+
+RUN echo "Creating vars"
+ENV REBBIT_USERNAME_SET=test2
+ENV REBBIT_USERPASS_SET=test2
+ENV REBBIT_IP_SET=192.168.0.100
 
 RUN chmod +x ./opt/run.sh
+EXPOSE 5672
 
 #Set script as entry point 
 ENTRYPOINT ["./opt/run.sh"]
