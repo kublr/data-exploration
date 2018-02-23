@@ -13,7 +13,7 @@ docker run -i -v mountFolderFromLocal:/opt/volume data-exploration:latest
 
 or
 
-sudo docker run -i -v /home/dennisfedorchuk/Desktop/Tables:/opt/volume -e RABBIT_IP_SET=LINK -e RABBIT_USERPASS_SET=USER -e RABBIT_USERNAME_SET=PASS data-exploration:latest 
+sudo docker run -i -v mountFolderFromLoca:/opt/volume -e RABBIT_IP_SET=LINK -e RABBIT_USERPASS_SET=USER -e RABBIT_USERNAME_SET=PASS data-exploration:latest 
 
 Replace: LINK, USER, PASS
 ```
@@ -40,7 +40,7 @@ docker run -i -v mountFolderFromLocal:/opt/volume data-exploration-handler:lates
 
 or 
 
-sudo docker run -i -v /home/dennisfedorchuk/Desktop/Tables:/opt/volume -e RABBIT_IP_SET=LINK -e RABBIT_USERPASS_SET=USER -e RABBIT_USERNAME_SET=PASS data-exploration-handler:latest 
+sudo docker run -i -v mountFolderFromLoca:/opt/volume -e RABBIT_IP_SET=LINK -e RABBIT_USERPASS_SET=USER -e RABBIT_USERNAME_SET=PASS data-exploration-handler:latest 
 Replace: LINK, USER, PASS
 ```
 The worker needs the following args to be set:
