@@ -33,20 +33,20 @@ def result_handler(n_estimators, min_samples_leaf, result):
 @app.task
 def predict(n_estimators, min_samples_leaf):
     # Create Y set One hot
-    y = pd.get_dummies(df['STATUS'])
+    y = pd.get_dummies(df['churn'])
 
     # Drop not needed cols
-    x = df.drop(columns=['STATUS', 'OWNER_LOCATION', 'YEAR'])
+    x = df.drop(columns=['churn', 'voice mail plan', 'international plan', 'phone number', 'state'])
 
     # Concat one hot encoding for year and location
-    x = pd.concat([x, pd.get_dummies(df['OWNER_LOCATION']), pd.get_dummies(df['YEAR'])], axis=1)
+    x = pd.concat([x, pd.DataFrame(df['voice mail plan'].astype('category').cat.codes, columns=['voice mail plan']),
+                   pd.DataFrame(df['international plan'].astype('category').cat.codes, columns=['international plan']),
+                   pd.DataFrame(df['state'].astype('category').cat.codes, columns=['state'])],
+                   axis=1)
 
-    # Remove IDs
-    x = x.iloc[:, 1:]
-    feature_names = x.columns.values
     x = np.array(x)
 
-    X_train, X_test, Y_train, Y_test = train_test_split(x, y, test_size=0.30, random_state=42)
+    X_train, X_test, Y_train, Y_test = train_test_split(x, y, test_size=0.20, random_state=42)
 
 
     # Print shapes
