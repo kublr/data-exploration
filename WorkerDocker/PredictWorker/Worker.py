@@ -10,9 +10,9 @@ import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
-user = os.environ['REBBIT_USERNAME_SET']
-userpass = os.environ['REBBIT_USERPASS_SET']
-ip = os.environ['REBBIT_IP_SET']
+user = os.environ['RABBIT_USERNAME_SET']
+userpass = os.environ['RABBIT_USERPASS_SET']
+ip = os.environ['RABBIT_IP_SET']
 
 
 app = Celery('Worker', broker=('amqp://' + user + ':' + userpass + '@' + ip + '/'))

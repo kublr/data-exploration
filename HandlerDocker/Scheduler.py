@@ -4,9 +4,9 @@ from celery.signals import task_success
 import time
 
 
-user = os.environ['REBBIT_USERNAME_SET']
-userpass = os.environ['REBBIT_USERPASS_SET']
-ip = os.environ['REBBIT_IP_SET']
+user = os.environ['RABBIT_USERNAME_SET']
+userpass = os.environ['RABBIT_USERPASS_SET']
+ip = os.environ['RABBIT_IP_SET']
 
 
 app = Celery('Worker', broker=('amqp://' + user + ':' + userpass + '@' + ip + '/'))

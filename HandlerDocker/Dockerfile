@@ -21,9 +21,9 @@ COPY HandlerWorker/Worker.py /opt
 COPY Scheduler.py /opt
 
 RUN echo "Creating vars"
-ENV REBBIT_USERNAME_SET=test2
-ENV REBBIT_USERPASS_SET=test2
-ENV REBBIT_IP_SET=192.168.0.100
+ENV RABBIT_USERNAME_SET=test2
+ENV RABBIT_USERPASS_SET=test2
+ENV RABBIT_IP_SET=192.168.0.100
 
 RUN chmod +x ./opt/run.sh
 EXPOSE 5672
