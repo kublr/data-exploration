@@ -7,5 +7,5 @@ echo "Creating vars"
 echo "Running in Celery"
 cd opt/
 python3 Scheduler.py
-celery -A Worker worker -Q handler_queue --loglevel=info -n handler@%n
+celery -A Worker worker -Q handler_queue --concurrency=1 --loglevel=info -n handler@%n
 

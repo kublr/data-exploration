@@ -9,7 +9,6 @@ RUN apt-get update && apt-get install -y make ant
 
 # Install essentials
 RUN apt-get -y install python3-pip
-RUN pip3 install numpy
 RUN pip3 install pandas
 RUN pip3 install celery
 
