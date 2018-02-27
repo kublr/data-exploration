@@ -37,7 +37,7 @@ Replace: LINK, USER, PASS
 Make sure that mount folder starts from root of the computer. Ex: /home/user/Desktop/MountFolder
 
 
-2. HANDLER WORKER - receives the results from workers and puts them in a list in the mounted folder.
+2. HANDLER WORKER - receives the results from workers and puts them in a list in the mounted folder. There should only be one handler worker per one queue since the handler worker launches the scheduler as well and the scheduler creates an execution queue.
 
 
 Building worker:
